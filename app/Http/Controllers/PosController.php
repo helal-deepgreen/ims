@@ -55,6 +55,7 @@ class PosController extends Controller
             'id' => $validatedData['id'],
             'name' => $validatedData['name'],
             'qty' => 1,
+            'return_sylinder' => 2,
             'price' => $validatedData['price']
         ]);
 

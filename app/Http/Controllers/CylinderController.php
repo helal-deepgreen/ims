@@ -28,8 +28,8 @@ class CylinderController extends Controller
 
         $customers = Customer::all()->sortBy('name');
 
-        // $carts = Cart::content();
-        $carts= session()->get('cylinder_cart');
+        $carts = Cart::content();
+        // $carts= session()->get('Cart');
 
         // return $carts;
         return view('cylinders.index', [

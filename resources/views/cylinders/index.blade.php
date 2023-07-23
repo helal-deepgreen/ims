@@ -56,42 +56,45 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">QTY</th>
+                                    <th scope="col">New</th>
                                     <th scope="col">Return</th>
+                                    <th scope="col">QTY</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">SubTotal</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                 {{-- @foreach ($carts as $item)
+                                @foreach ($carts as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
-                                    <td style="min-width: 85px;">
-                                        <form action="" method="POST">
+                                    <form action="{{ route('pos.updateCartItem', $item->rowId) }}" method="POST">
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                                <label class="form-check-label" for="flexCheckChecked">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td style="min-width: 120px;">
+                                        <form action="{{ route('pos.updateCartItem', $item->rowId) }}" method="POST">
                                             @csrf
                                             <div class="input-group">
-                                                <input type="number" class="form-control" name="return_cylinder" required value="{{ old('return_cylinder', $item->return_cylinder) }}">
+                                                <input type="number" class="form-control" name="qty" required value="{{ $item->qty }}">
                                                 <div class="input-group-append">
                                                     <button type="submit" class="btn btn-success border-none" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sumbit"><i class="fas fa-check"></i></button>
                                                 </div>
                                             </div>
-                                        </form>
 
                                     </td>
-                                    <td style="min-width:85px;">
-                                        <form action="{{ route('pos.updateCartItem', $item->rowId) }}" method="POST">
-                                            @csrf
-                                            <div class="input-group">
-                                                <input class="form-check-input" type="checkbox" name="return_cylinder"" value="1" id="flexCheckChecked">
-
-                                                <label class="form-check-label" for="flexCheckChecked">
-                                                </label>
-
-
-                                             </div>
-                                        </form>
-                                    </td>
+                                </form>
                                     <td>{{ $item->price }}</td>
                                     <td>{{ $item->subtotal }}</td>
                                     <td>
@@ -107,7 +110,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                            </tbody> --}}
+                            </tbody>
                         </table>
                     </div>
                     <!-- END: Table Cart -->
@@ -161,7 +164,7 @@
                             <div class="col-md-12 mt-4">
                                 <div class="d-flex flex-wrap align-items-center justify-content-center">
                                     {{-- <a href="{{ route('customers.create') }}" class="btn btn-primary add-list mx-1">Add Customer</a> --}}
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">Add Customer</button>
+                                    <button type="button" class="btn btn-primary add-list mx-1" data-bs-toggle="modal" data-bs-target="#modal">Add Customer</button>
                                     <button type="submit" class="btn btn-success add-list mx-1">Create Invoice</button>
                                 </div>
                             </div>
@@ -183,7 +186,7 @@
                 <div class="card-body">
                     <!-- BEGIN: Search products -->
                     <div class="col-lg-12">
-                        <form action="{{ route('cylinder.index') }}" method="GET">
+                        <form action="{{ route('pos.index') }}" method="GET">
                             <div class="d-flex flex-wrap align-items-center justify-content-between">
                                 <div class="form-group row align-items-center">
                                     <label for="row" class="col-auto">Row:</label>
@@ -242,7 +245,7 @@
                                         <td>{{ $product->selling_price }}</td>
                                         <td>
                                             <div class="d-flex">
-                                                <form action="{{ route('cylinder.addCartItem', $product->id) }}" method="POST">
+                                                <form action="{{ route('pos.addCartItem', $product->id) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $product->id }}">
                                                     <input type="hidden" name="name" value="{{ $product->product_name }}">
@@ -279,35 +282,7 @@
         <!-- END: Section Right -->
     </div>
 </div>
+{!! Toastr::message() !!}
 @include('dashboard.body.add-customer')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"
-integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<script>
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-</script>
-
-<script>
-    $(document).ready(function(){
-
-        $('#flexCheckChecked').on('click',function(){
-            var checkData = $(this).val();
-            alert(checkData)
-            $.ajax({
-
-                type:'GET',
-                data:{'return_cylinder':checkData},
-                success:function(data){
-
-                }
-
-            });
-        });
-    });
-    </script>
-
 @endsection
+

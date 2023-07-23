@@ -145,7 +145,9 @@
                                 <!-- Submit button -->
                             <div class="col-md-12 mt-4">
                                 <div class="d-flex flex-wrap align-items-center justify-content-center">
-                                    <a href="{{ route('customers.create') }}" class="btn btn-primary add-list mx-1">Add Customer</a>
+                                    <button type="button" class="btn btn-primary add-list mx-1" data-bs-toggle="modal" data-bs-target="#modal">Add Customer</button>
+
+
                                     <button type="submit" class="btn btn-success add-list mx-1">Create Invoice</button>
                                 </div>
                             </div>
@@ -263,4 +265,6 @@
         <!-- END: Section Right -->
     </div>
 </div>
+{!! Toastr::message() !!}
+@include('dashboard.body.add-customer')
 @endsection
