@@ -1,10 +1,13 @@
 
+// import { csrf_token, deleteData, handleSuccess, handleError } from './helper';
 
 
 $(document).ready(function(){
 
     jQuery('#submit').submit(function(e){
         e.preventDefault();
+       const x = jQuery('#submit').serialize()
+        console.log(x)
         const url = $(this).attr('action');
         jQuery.ajax({
             url: url,

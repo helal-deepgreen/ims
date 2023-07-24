@@ -25,7 +25,7 @@
                 <div class="col-12 col-md-6">
                   <label class="form-label" for="email">Email</label>
                   <input
-                    type="text"
+                    type="email"
                     id="email"
                     name="email"
                     class="form-control"

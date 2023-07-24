@@ -97,7 +97,8 @@
                             <!-- Form Group (bank name) -->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="bank_name">Bank Name</label>
-                                <select class="form-select form-control-solid @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name">
+                                <select class="form-select form-control-solid @error('bank_name') is-invalid @enderror" id="bank_name"
+                                 name="bank_name">
                                     <option selected="" disabled="">Select a bank:</option>
                                     <option value="BRI" @if(old('bank_name') == 'BRI')selected="selected"@endif>BRI</option>
                                     <option value="BNI" @if(old('bank_name') == 'BNI')selected="selected"@endif>BNI</option>

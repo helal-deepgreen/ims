@@ -51,7 +51,9 @@
                 </div>
                 <div class="card-body">
                     <!-- BEGIN: Table Cart -->
+
                     <div class="table-responsive">
+
                         <table class="table table-striped align-middle">
                             <thead class="thead-light">
                                 <tr>

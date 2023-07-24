@@ -76,10 +76,15 @@
                             <div class="form-control form-control-solid">{{ $order->pay }}</div>
                         </div>
                         <!-- Form Group (due amount) -->
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label class="small mb-1">Due Amount</label>
                             <div class="form-control form-control-solid">{{ $order->due }}</div>
                         </div>
+                                               <!-- Form Group (due amount) -->
+                                               <div class="col-md-3">
+                                                <label class="small mb-1">Return Cylinder</label>
+                                                <div class="form-control form-control-solid"> @if($order->return_cylinder == '1') 1 @else 0 @endif </div>
+                                            </div>
                     </div>
                     <!-- Form Row -->
                     <div class="row gx-3 mb-3">

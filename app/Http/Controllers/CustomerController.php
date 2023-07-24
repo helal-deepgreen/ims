@@ -43,35 +43,23 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            // 'photo' => 'image|file|max:1024',
-            'name' => 'required|string|max:50',
-            // 'email' => 'required|email|max:50|unique:customers,email',
-            'phone' => 'required|string|max:25|unique:customers,phone',
-            // 'account_holder' => 'max:50',
-            // 'account_number' => 'max:25',
-            // 'bank_name' => 'max:25',
-            // 'address' => 'required|string|max:100',
-        ];
+        $request->validate([
+            'name' =>'required',
+            'phone'=>'required|string|max:25|unique:customers,phone',
+        ]);
 
-        $validatedData = $request->validate($rules);
 
-        /**
-         * Handle upload an image
-         */
-        if ($file = $request->file('photo')) {
-            $fileName = hexdec(uniqid()).'.'.$file->getClientOriginalExtension();
-            $path = 'public/customers/';
-
-            // Store an image to Storage
-            $file->storeAs($path, $fileName);
-            $validatedData['photo'] = $fileName;
-        }
-
-        Customer::create($validatedData);
-
+        $store = new Customer();
+        $store->name =$request->name;
+        $store->email = $request->email;
+        $store->phone = $request->phone;
+        $store->account_holder = $request->account_holder;
+        $store->account_number = $request->account_number;
+        $store->bank_name = $request->bank_name;
+        $store->address = $request->address;
+        $store->save();
         return response()->json([
-            'message' => 'Color added successfully'
+            'message' => 'Customer added successfully'
         ]);
         // return Redirect::route('customers.index')->with('success', 'New customer has been created!');
     }

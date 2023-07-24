@@ -19,7 +19,7 @@
 
 <!-- BEGIN: Invoice -->
 <div class="invoice-16 invoice-content">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
                 <!-- BEGIN: Invoice Details -->
@@ -56,6 +56,16 @@
                                 <p class="inv-from-1">{{ $customer->phone }}</p>
                                 <p class="inv-from-1">{{ $customer->email }}</p>
                                 <p class="inv-from-2">{{ $customer->address }}</p>
+                                <p class="inv-from-2">Customer Type : @if($customer_type=='') Old customer @else New Customer @endif</p>
+                                <p class="inv-from-2">Return cylinder : @if($customer_type == 'New Customer')
+                                    New customer
+                                @elseif($return == '1')
+                                1
+                                @else
+                                    Due
+                                @endif
+
+                                </p>
                             </div>
                             <div class="col-sm-6 text-end mb-50">
                                 <h4 class="inv-title-1">Store</h4>
@@ -96,6 +106,7 @@
                                     <td colspan="3"><strong>Tax</strong></td>
                                     <td><strong>{{ Cart::tax() }}</strong></td>
                                 </tr>
+
                                 <tr>
                                     <td colspan="3"><strong>Total</strong></td>
                                     <td><strong>{{ Cart::total() }}</strong></td>
@@ -143,10 +154,12 @@
                 <div class="modal-body">
                     <div class="modal-body">
                         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                        <input type="hidden" name="return_cylinder" value="@if($return == '1'){{ $return }} @else 0 @endif">
+
                         <div class="mb-3">
                             <!-- Form Group (type of product category) -->
                             <label class="small mb-1" for="payment_type">Payment <span class="text-danger">*</span></label>
-                            <select class="form-control @error('payment_type') is-invalid @enderror" id="payment_type" name="payment_type">
+                            <select class="form-control @error('payment_type') is-invalid @enderror" id="payment_type" name="payment_type"  required>
                                 <option selected="" disabled="">Select a payment:</option>
                                 <option value="HandCash">HandCash</option>
                                 <option value="Cheque">Cheque</option>
@@ -160,7 +173,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="pay">Pay Now <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-solid @error('pay') is-invalid @enderror" id="pay" name="pay" placeholder="" value="{{ old('pay') }}" autocomplete="off"/>
+                            <input type="text" class="form-control form-control-solid @error('pay') is-invalid @enderror" id="pay" name="pay" placeholder="" value="{{ old('pay') }}" required autocomplete="off"/>
                             @error('pay')
                             <div class="invalid-feedback">
                                 {{ $message }}

@@ -92,6 +92,7 @@
                                     <th scope="col">Invoice</th>
                                     <th scope="col">@sortablelink('customer.name', 'name')</th>
                                     <th scope="col">@sortablelink('order_date', 'Date')</th>
+                                    <th scope="col">Return Cylinder</th>
                                     <th scope="col">Payment</th>
                                     <th scope="col">@sortablelink('total')</th>
                                     <th scope="col">Status</th>
@@ -105,6 +106,7 @@
                                     <td>{{ $order->invoice_no }}</td>
                                     <td>{{ $order->customer->name }}</td>
                                     <td>{{ $order->order_date }}</td>
+                                    <td> @if($order->return_cylinder =='1') 1 @else 0 @endif</td>
                                     <td>{{ $order->payment_type }}</td>
                                     <td>{{ $order->total }}</td>
                                     <td>

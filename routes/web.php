@@ -56,11 +56,12 @@ Route::middleware('auth')->group(function () {
     // Route POS
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos/cart/add', [PosController::class, 'addCartItem'])->name('pos.addCartItem');
-    Route::post('/pos/cart/update/{rowId}', [PosController::class, 'updateCartItem'])->name('pos.updateCartItem');
-    Route::delete('/pos/cart/delete/{rowId}', [PosController::class, 'deleteCartItem'])->name('pos.deleteCartItem');
+        Route::post('/pos/cart/update/{rowId}', [PosController::class, 'updateCartItem'])->name('pos.updateCartItem');
+        Route::post('/pos/product/update/{price}', [PosController::class, 'updatePrice'])->name('pos.updatePrice');
+    Route::delete('/pos/cart/delete/{id}', [PosController::class, 'deleteCartItem'])->name('pos.deleteCartItem');
     Route::post('/pos/invoice', [PosController::class, 'createInvoice'])->name('pos.createInvoice');
-
     Route::post('/pos', [OrderController::class, 'createOrder'])->name('pos.createOrder');
+    // Route::get('/pos', [OrderController::class, 'dueCylinder'])->name('pos.dueCylinder');
 
     // Route Orders
     Route::get('/orders/pending', [OrderController::class, 'pendingOrders'])->name('order.pendingOrders');

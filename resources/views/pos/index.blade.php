@@ -50,8 +50,10 @@
                     Cart
                 </div>
                 <div class="card-body">
+
                     <!-- BEGIN: Table Cart -->
                     <div class="table-responsive">
+
                         <table class="table table-striped align-middle">
                             <thead class="thead-light">
                                 <tr>
@@ -66,7 +68,7 @@
                                 @foreach ($carts as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
-                                    <td style="min-width: 170px;">
+                                    <td style="min-width: 85px;">
                                         <form action="{{ route('pos.updateCartItem', $item->rowId) }}" method="POST">
                                             @csrf
                                             <div class="input-group">
@@ -77,7 +79,17 @@
                                             </div>
                                         </form>
                                     </td>
-                                    <td>{{ $item->price }}</td>
+                                    <td style="min-width: 85px;">
+                                        <form action="{{ route('pos.updatePrice', $item->rowId) }}" method="POST">
+                                            @csrf
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" name="price" required value="{{ old('price', $item->price) }}">
+                                                <div class="input-group-append">
+                                                    <button type="submit" class="btn btn-success border-none" data-toggle="tooltip" data-placement="top" title="" data-original-title="Sumbit"><i class="fas fa-check"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
                                     <td>{{ $item->subtotal }}</td>
                                     <td>
                                         <div class="d-flex">
@@ -127,6 +139,7 @@
 
                     <form action="{{ route('pos.createInvoice') }}" method="POST">
                         @csrf
+
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label class="small mb-1" for="customer_id">Customer <span class="text-danger">*</span></label>
@@ -142,8 +155,27 @@
                                 </div>
                                 @enderror
                             </div>
+                            <div class="d-flex justify-content-between pt-4 w-75">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="new" value="New Customer" id="newCustomer">
+                                    <label class="form-check-label" for="newCustomer">
+                                        New customer
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="return" value="1" id="returnCylinder">
+                                    <label class="form-check-label" for="returnCylinder">
+                                        Return cylinder
+                                    </label>
+                                </div>
+                                <div class="due" >
+                                    <label class="text-danger" id="dueCylinder">
+
+                                    </label>
+                                </div>
+                            </div>
                                 <!-- Submit button -->
-                            <div class="col-md-12 mt-4">
+                            <div class="col-md-12 mt-5">
                                 <div class="d-flex flex-wrap align-items-center justify-content-center">
                                     <button type="button" class="btn btn-primary add-list mx-1" data-bs-toggle="modal" data-bs-target="#modal">Add Customer</button>
 
@@ -267,4 +299,39 @@
 </div>
 {!! Toastr::message() !!}
 @include('dashboard.body.add-customer')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
+<script>
+    $(document).ready(function(){
+
+        $('#customer_id').on('change',function(){
+
+            var customer_id = $(this).val();
+
+            $.ajax({
+                url:"{{route('pos.index')}}",
+                type:'GET',
+                data:{'customer_id':customer_id},
+                success:function(data){
+                   console.log(data.dueCylinder.id)
+                    var due = data.dueCylinder.id;
+
+                   $("#dueCylinder").html("Due cylinder : " +due);
+                },error:function(err){
+                    alert("erroro");
+                }
+
+            });
+        });
+    });
+    </script>
 @endsection
